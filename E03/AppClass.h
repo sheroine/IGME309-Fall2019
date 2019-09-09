@@ -28,6 +28,9 @@ class AppClass
 	GLuint m_uShaderProgramID = 0; //Shader program
 	GLuint m_uVAO = 0; //Vertex Array Object
 	GLuint m_uVBO = 0; //Vertex Buffer Object
+
+	GLuint complement = true;	//if make complementary color or not
+	sf::Keyboard::Key prevKeyPress;	//whats the previous pressed key
 	
 	glm::vec3 m_v3Color = glm::vec3(-1.0f); //Color of shape
 

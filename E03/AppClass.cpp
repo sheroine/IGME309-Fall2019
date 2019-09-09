@@ -67,7 +67,7 @@ void AppClass::InitOpenGL(void)
 }
 void AppClass::InitShaders(void)
 {
-	m_uShaderProgramID = LoadShaders("Shaders//BasicColor.vs", "Shaders//BasicColor.fs");
+	m_uShaderProgramID = LoadShaders("Shaders//BasicColor.vs", "Shaders//BasicColorE03.fs");
 	glUseProgram(m_uShaderProgramID);
 }
 void AppClass::InitVariables(void)
@@ -106,15 +106,77 @@ void AppClass::InitVariables(void)
 void AppClass::ProcessKeyboard(sf::Event a_event)
 {
 	if (a_event.key.code == sf::Keyboard::Key::Escape)//Event says I pressed the Escape key
+	{
 		m_bRunning = false;
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) //I am currently pressing the Num1 (not the same as above)
+	{
+		if (prevKeyPress == sf::Keyboard::Num1)
+		{
+			//want to toggle the shader on and off when on the same "page"
+			complement = !complement;
+		}
+		else
+		{
+			//turn the shader on by default
+			complement = true;
+		}
+		
+		prevKeyPress = sf::Keyboard::Num1;
+
 		m_v3Color = glm::vec3(1.0f, 0.0f, 0.0f);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+	{
+		if (prevKeyPress == sf::Keyboard::Num2)
+		{
+			//want to toggle the shader on and off when on the same "page"
+			complement = !complement;
+		}
+		else
+		{
+			//turn the shader on by default
+			complement = true;
+		}
+
+		prevKeyPress = sf::Keyboard::Num2;
+
 		m_v3Color = glm::vec3(0.0f, 1.0f, 0.0f);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+	{
+		if (prevKeyPress == sf::Keyboard::Num3)
+		{
+			//want to toggle the shader on and off when on the same "page"
+			complement = !complement;
+		}
+		else
+		{
+			//turn the shader on by default
+			complement = true;
+		}
+
+		prevKeyPress = sf::Keyboard::Num3;
+
 		m_v3Color = glm::vec3(0.0f, 0.0f, 1.0f);
+	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0))
+	{
+		if (prevKeyPress == sf::Keyboard::Num0)
+		{
+			//want to toggle the shader on and off when on the same "page"
+			complement = !complement;
+		}
+		else
+		{
+			//turn the shader on by default
+			complement = true;
+		}
+
+		prevKeyPress = sf::Keyboard::Num0;
+
 		m_v3Color = glm::vec3(-1.0f, -1.0f, -1.0f);
+	}
 }
 void AppClass::Display(void)
 {
@@ -124,6 +186,9 @@ void AppClass::Display(void)
 	//read uniforms and send values
 	GLuint SolidColor = glGetUniformLocation(m_uShaderProgramID, "SolidColor");
 	glUniform3f(SolidColor, m_v3Color.r, m_v3Color.g, m_v3Color.b);
+
+	GLuint ifComplementary = glGetUniformLocation(m_uShaderProgramID, "ifComplementary");
+	glUniform1ui(ifComplementary, complement);
 
 	//draw content
 	glDrawArrays(GL_TRIANGLES, 0, 3);

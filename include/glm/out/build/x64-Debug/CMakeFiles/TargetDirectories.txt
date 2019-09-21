@@ -1,3 +1,0 @@
-D:/Profiles/mxw4175/source/repos/IGME309-Fall2019/include/glm/out/build/x64-Debug/CMakeFiles/glm_dummy.dir
-D:/Profiles/mxw4175/source/repos/IGME309-Fall2019/include/glm/out/build/x64-Debug/CMakeFiles/edit_cache.dir
-D:/Profiles/mxw4175/source/repos/IGME309-Fall2019/include/glm/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir

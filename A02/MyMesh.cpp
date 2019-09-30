@@ -319,7 +319,9 @@ void MyMesh::GenerateCylinder(float a_fRadius, float a_fHeight, int a_nSubdivisi
 		vector3 topPt2(a_fRadius * cos(angle * (i + 1)), a_fRadius * sin(angle * (i + 1)), a_fHeight);
 
 		//base circle
-		AddTri(bottomPt2, bottomPt1, vector3(0, 0, 0));
+		AddTri(bottomPt2,
+			bottomPt1,
+			vector3(0, 0, 0));
 
 		//top circle
 		AddTri(vector3(0, 0, a_fHeight),
@@ -356,9 +358,38 @@ void MyMesh::GenerateTube(float a_fOuterRadius, float a_fInnerRadius, float a_fH
 	Release();
 	Init();
 
-	// Replace this with your code
-	GenerateCube(a_fOuterRadius * 2.0f, a_v3Color);
-	// -------------------------------
+	//make tube
+	//inner angle
+	float angle = (360.0f / a_nSubdivisions) * (PI / 180.0f);
+
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		//vertices
+		vector3 topInner1(a_fInnerRadius * cos(angle * i), a_fHeight, a_fInnerRadius * sin(angle * i));
+		vector3 topInner2(a_fInnerRadius * cos(angle * (i + 1)), a_fHeight, a_fInnerRadius * sin(angle * (i + 1)));
+
+		vector3 topOuter1(a_fOuterRadius * cos(angle * i), a_fHeight, a_fOuterRadius * sin(angle * i));
+		vector3 topOuter2(a_fOuterRadius * cos(angle * (i + 1)), a_fHeight, a_fOuterRadius * sin(angle * (i + 1)));
+
+		vector3 bottomInner1(a_fInnerRadius * cos(angle * i), 0, a_fInnerRadius * sin(angle * i));
+		vector3 bottomInner2(a_fInnerRadius * cos(angle * (i + 1)), 0, a_fInnerRadius * sin(angle * (i + 1)));
+
+		vector3 bottomOuter1(a_fOuterRadius * cos(angle * i), 0, a_fOuterRadius * sin(angle * i));
+		vector3 bottomOuter2(a_fOuterRadius * cos(angle * (i + 1)), 0, a_fOuterRadius * sin(angle * (i + 1)));
+
+		//generate quads
+		//top
+		AddQuad(topInner1, topInner2, topOuter1, topOuter2);
+
+		//bottom
+		AddQuad(bottomInner2, bottomInner1, bottomOuter2, bottomOuter1);
+
+		//inner faces
+		AddQuad(topInner2, topInner1, bottomInner2, bottomInner1);
+
+		//outer faces
+		AddQuad(topOuter1, topOuter2, bottomOuter1, bottomOuter2);
+	}
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);

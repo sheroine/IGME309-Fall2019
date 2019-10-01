@@ -444,9 +444,12 @@ void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Co
 	Release();
 	Init();
 
-	// Replace this with your code
-	GenerateCube(a_fRadius * 2.0f, a_v3Color);
-	// -------------------------------
+	//make sphere
+	//angles
+	float sectorAngle;
+	float stackAngle;
+
+
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);

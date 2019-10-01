@@ -21,6 +21,12 @@ class Application
 	uint m_uOrbits = 0; //number of shapes starting at 3 and increasing in sides
 	std::vector<uint> m_shapeList; //shape index for circles
 	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu";
+
+	//2d vector to store vertex vector3s
+	std::vector<std::vector<vector3> > circleVertices;
+
+	//vector of paths
+	std::vector<uint> paths;
 	
 private:
 	static ImGuiObject gui; //GUI object

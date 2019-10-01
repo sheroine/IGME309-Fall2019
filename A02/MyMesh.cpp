@@ -419,9 +419,31 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 	Release();
 	Init();
 
-	// Replace this with your code
-	GenerateCube(a_fOuterRadius * 2.0f, a_v3Color);
-	// -------------------------------
+	//make torus and i want donuts
+	//angles
+	float angleA = 2 * PI / a_nSubdivisionsA;
+	float angleB = 2 * PI / a_nSubdivisionsB;
+
+	for (int i = 0; i < a_nSubdivisionsA; i++)
+	{
+		for (int j = 0; j < a_nSubdivisionsB; j++)
+		{
+			vector3 pt1((a_fOuterRadius + a_fInnerRadius * cos(j * angleB)) * cos(i * angleA),
+				a_fInnerRadius * sin(j * angleB),
+				(a_fOuterRadius + a_fInnerRadius * cos(j * angleB)) * sin(i * angleA));
+			vector3 pt2((a_fOuterRadius + a_fInnerRadius * cos(j * angleB)) * cos((i + 1) * angleA),
+				a_fInnerRadius * sin(j * angleB),
+				(a_fOuterRadius + a_fInnerRadius * cos(j * angleB)) * sin((i + 1) * angleA));
+			vector3 pt3((a_fOuterRadius + a_fInnerRadius * cos((j + 1) * angleB)) * cos(i * angleA),
+				a_fInnerRadius * sin((j + 1) * angleB),
+				(a_fOuterRadius + a_fInnerRadius * cos((j + 1) * angleB)) * sin(i * angleA));
+			vector3 pt4((a_fOuterRadius + a_fInnerRadius * cos((j + 1) * angleB)) * cos((i + 1) * angleA),
+				a_fInnerRadius * sin((j + 1) * angleB),
+				(a_fOuterRadius + a_fInnerRadius * cos((j + 1) * angleB)) * sin((i + 1) * angleA));
+
+			AddQuad(pt1, pt3, pt2, pt4);
+		}
+	}
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);
@@ -446,10 +468,33 @@ void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Co
 
 	//make sphere
 	//angles
-	float sectorAngle;
-	float stackAngle;
+	float sectorAngle = 2 * PI / a_nSubdivisions;
+	float stackAngle = PI / a_nSubdivisions;
 
+	for (int i = 0; i < a_nSubdivisions; i++)
+	{
+		//top cap
+		AddTri(vector3(0, a_fRadius, 0),
+			vector3(a_fRadius * sin(stackAngle) * cos((i + 1) * sectorAngle), a_fRadius * cos(stackAngle), a_fRadius * sin(stackAngle) * sin((i + 1) * sectorAngle)),
+			vector3(a_fRadius * sin(stackAngle) * cos(i * sectorAngle), a_fRadius * cos(stackAngle), a_fRadius * sin(stackAngle) * sin(i * sectorAngle)));
 
+		//lateral faces
+		for (int j = 1; j < a_nSubdivisions - 1; j++)
+		{
+			vector3 pt1(a_fRadius * sin(j * stackAngle) * cos(i * sectorAngle), a_fRadius * cos(j * stackAngle), a_fRadius * sin(j * stackAngle) * sin(i * sectorAngle));
+			vector3 pt2(a_fRadius * sin(j * stackAngle) * cos((i + 1) * sectorAngle), a_fRadius * cos(j * stackAngle), a_fRadius * sin(j * stackAngle) * sin((i + 1) * sectorAngle));
+			vector3 pt3(a_fRadius * sin((j + 1) * stackAngle) * cos(i * sectorAngle), a_fRadius * cos((j + 1) * stackAngle), a_fRadius * sin((j + 1) * stackAngle) * sin(i * sectorAngle));
+			vector3 pt4(a_fRadius * sin((j + 1) * stackAngle) * cos((i + 1) * sectorAngle), a_fRadius * cos((j + 1) * stackAngle), a_fRadius * sin((j + 1) * stackAngle) * sin((i + 1) * sectorAngle));
+
+			AddQuad(pt1, pt2, pt3, pt4);
+		}
+
+		//bottom cap
+		AddTri(
+			vector3(0, -a_fRadius, 0),
+			vector3(a_fRadius * sin(stackAngle) * cos(i * sectorAngle), -a_fRadius * cos(stackAngle), a_fRadius * sin(stackAngle) * sin(i * sectorAngle)),
+			vector3(a_fRadius * sin(stackAngle) * cos((i + 1) * sectorAngle), -a_fRadius * cos(stackAngle), a_fRadius * sin(stackAngle) * sin((i + 1) * sectorAngle)));
+	}
 
 	// Adding information about color
 	CompleteMesh(a_v3Color);

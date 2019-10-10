@@ -152,10 +152,12 @@ void Simplex::MyCamera::CalculateProjectionMatrix(void)
 
 void MyCamera::MoveForward(float a_fDistance)
 {
-	//The following is just an example and does not take in account the forward vector (AKA view vector)
-	m_v3Position += vector3(0.0f, 0.0f,-a_fDistance);
-	m_v3Target += vector3(0.0f, 0.0f, -a_fDistance);
-	m_v3Above += vector3(0.0f, 0.0f, -a_fDistance);
+	//calculate forward vector
+	vector3 forward = m_v3Target - m_v3Position;
+
+	m_v3Position += forward * a_fDistance;
+	m_v3Target += forward * a_fDistance;
+	m_v3Above += forward * a_fDistance;
 }
 
 void MyCamera::MoveVertical(float a_fDistance)
@@ -167,7 +169,74 @@ void MyCamera::MoveVertical(float a_fDistance)
 
 void MyCamera::MoveSideways(float a_fDistance)
 {
-	m_v3Position += vector3(a_fDistance, 0.0f, 0.0f);
-	m_v3Target += vector3(a_fDistance, 0.0f, 0.0f);
-	m_v3Above += vector3(a_fDistance, 0.0f, 0.0f);
+	//calculate forward vector
+	vector3 forward = m_v3Target - m_v3Position;
+	//get up vector
+	vector3 up = m_v3Above - m_v3Position;
+	//get right vector
+	vector3 right = -glm::cross(up, forward);
+
+	m_v3Position += right * a_fDistance;
+	m_v3Target += right * a_fDistance;
+	m_v3Above += right * a_fDistance;
+}
+
+//rotate around y axis
+void MyCamera::YawRotation(float angle)
+{
+	//get actual forward and up vector
+	vector3 forward = m_v3Target - m_v3Position;
+	vector3 up = m_v3Above - m_v3Position;
+
+	//make quaternion
+	glm::quat rotation = glm::angleAxis(angle, AXIS_Y);
+
+	//rotate the forward and up
+	forward = forward * rotation;
+	glm::normalize(forward);
+	up = up * rotation;
+	glm::normalize(up);
+
+	//translate forward and up back to camera pos
+	vector3 newTarget = m_v3Position + forward;
+	m_v3Target = newTarget;
+	m_v3Above = m_v3Position + up;
+}
+
+//rotate around x axis
+void MyCamera::PitchRotation(float angle)
+{
+	//get actual forward vector
+	vector3 forward = m_v3Target - m_v3Position;
+
+	//get up vector
+	vector3 up = m_v3Above - m_v3Position;
+
+	//get right vector
+	vector3 right = -glm::cross(up, forward);
+
+	//prevent going too far up or down
+	if (angle < 0 && glm::dot(AXIS_Y,forward) > 0.9f)
+	{
+		return;
+	}
+	else if(angle > 0 && glm::dot(-AXIS_Y, forward) > 0.9f)
+	{
+		return;
+	}
+	
+	//make quaternion
+	glm::quat rotation = glm::angleAxis(angle, right);
+
+	//rotate the forward and up
+	forward = forward * rotation;
+	glm::normalize(forward);
+	up = up * rotation;
+	glm::normalize(up);
+
+	//translate forward back to camera pos
+	vector3 newTarget = m_v3Position + forward;
+	m_v3Target = newTarget;
+	//update above
+	m_v3Above = m_v3Position + up;
 }

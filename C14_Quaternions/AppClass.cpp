@@ -31,7 +31,7 @@ void Application::Update(void)
 	if (false)
 	{
 		quaternion q1;
-		quaternion q2 = glm::angleAxis(glm::radians(359.9f), vector3(0.0f, 0.0f, 1.0f));
+		quaternion q2 = glm::angleAxis(glm::radians(90.9f), vector3(0.0f, 0.0f, 1.0f));
 		float fPercentage = MapValue(fTimer, 0.0f, 5.0f, 0.0f, 1.0f);
 		quaternion qSLERP = glm::mix(q1, q2, fPercentage);
 		m_m4Steve = glm::toMat4(qSLERP);

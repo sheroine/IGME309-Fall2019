@@ -370,11 +370,14 @@ void Application::CameraRotation(float a_fSpeed)
 	}
 
 	//Change the Yaw and the Pitch of the camera
-	glm::quat rotation = glm::angleAxis(-fAngleY, AXIS_Y);	//yaw rotation
+	//glm::quat rotation = glm::angleAxis(-fAngleY, AXIS_Y);	//yaw rotation
 	//rotation *= glm::angleAxis(fAngleX, AXIS_X);	//pitch rotation
 
-	vector3 newTarget = m_pCamera->GetTarget() * rotation;
-	m_pCamera->SetTarget(newTarget);
+	//vector3 newTarget = m_pCamera->GetTarget() * rotation;
+	//m_pCamera->SetTarget(newTarget);
+
+	m_pCamera->YawRotation(-fAngleY);
+	m_pCamera->PitchRotation(fAngleX);
 
 	SetCursorPos(CenterX, CenterY);//Position the mouse in the center
 }

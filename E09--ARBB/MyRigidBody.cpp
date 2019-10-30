@@ -84,10 +84,63 @@ void MyRigidBody::SetModelMatrix(matrix4 a_m4ModelMatrix)
 
 	m_m4ToWorld = a_m4ModelMatrix;
 	
-	//your code goes here---------------------
-	m_v3MinG = m_v3MinL;
-	m_v3MaxG = m_v3MaxL;
-	//----------------------------------------
+	//m_v3MinG = m_v3MinL;
+	//m_v3MaxG = m_v3MaxL;
+
+	//get 8 corners of box
+	vector3 corners[8];
+	//back
+	corners[0] = m_v3MinL;	//bottom left
+	corners[1] = vector3(m_v3MaxL.x, m_v3MinL.y, m_v3MinL.z);	//bottom right
+	corners[2] = vector3(m_v3MinL.x, m_v3MaxL.y, m_v3MinL.z);	//top left
+	corners[3] = vector3(m_v3MaxL.x, m_v3MaxL.y, m_v3MinL.z);	 //top right
+
+	//front
+	corners[4] = vector3(m_v3MinL.x, m_v3MinL.y, m_v3MaxL.z);	//bottom left
+	corners[5] = vector3(m_v3MaxL.x, m_v3MinL.y, m_v3MaxL.z);	//bottom right
+	corners[6] = vector3(m_v3MinL.x, m_v3MaxL.y, m_v3MaxL.z);	//top left
+	corners[7] = m_v3MaxL;	//top right
+
+	//turn them to world space
+	for (int i = 0; i < 8; i++)
+	{
+		corners[i] = vector3(m_m4ToWorld * vector4(corners[i], 1.0f));
+	}
+
+	//set them as first corner
+	m_v3MaxG = corners[0];
+	m_v3MinG = corners[0];
+	//find the highest and lowest points
+	for (int i = 1; i < 8; i++)
+	{
+		//x
+		if (m_v3MaxG.x < corners[i].x)
+		{
+			m_v3MaxG.x = corners[i].x;
+		}
+		if (m_v3MinG.x > corners[i].x)
+		{
+			m_v3MinG.x = corners[i].x;
+		}
+		//y
+		if (m_v3MaxG.y < corners[i].y)
+		{
+			m_v3MaxG.y = corners[i].y;
+		}
+		if (m_v3MinG.y > corners[i].y)
+		{
+			m_v3MinG.y = corners[i].y;
+		}
+		//z
+		if (m_v3MaxG.z < corners[i].z)
+		{
+			m_v3MaxG.z = corners[i].z;
+		}
+		if (m_v3MinG.z > corners[i].z)
+		{
+			m_v3MinG.z = corners[i].z;
+		}
+	}
 
 	//we calculate the distance between min and max vectors
 	m_v3ARBBSize = m_v3MaxG - m_v3MinG;

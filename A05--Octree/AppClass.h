@@ -1,6 +1,6 @@
 /*----------------------------------------------
-Programmer: Alberto Bobadilla (labigm@gmail.com)
-Date: 2017/06
+Programmer: Mandy Wong (mxw4175@g.rit.edu)
+Date: 2019/11
 ----------------------------------------------*/
 #ifndef __APPLICATIONCLASS_H_
 #define __APPLICATIONCLASS_H_
@@ -12,6 +12,8 @@ Date: 2017/06
 
 #include "MyEntityManager.h"
 
+#include "MyOctant.h"
+
 namespace Simplex
 {
 	//Adding Application to the Simplex namespace
@@ -21,8 +23,11 @@ class Application
 	uint m_uOctantID = -1; //Index of Octant to display
 	uint m_uObjects = 0; //Number of objects in the scene
 	uint m_uOctantLevels = 0; //Number of levels in the octree
+	MyOctant* m_pRoot = nullptr;
+	bool m_bOctVisRep = true;
+
 private:
-	String m_sProgrammer = "Alberto Bobadilla - labigm@rit.edu"; //programmer
+	String m_sProgrammer = "Mandy Wong - mxw4175@g.rit.edu"; //programmer
 
 	static ImGuiObject gui; //GUI object
 	bool m_bGUI_Main = true; //show Main GUI window?

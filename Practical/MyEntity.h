@@ -18,10 +18,13 @@ class MyEntity
 	bool m_bSetAxis = false; //render axis flag
 	String m_sUniqueID = ""; //Unique identifier name
 
-	Model* m_pModel = nullptr; //Model associated with this Entity
-	MyRigidBody* m_pRigidBody = nullptr; //Rigid Body associated with this Entity
+	uint m_nDimensionCount = 0; //tells how many dimensions this entity lives in
+	uint* m_DimensionArray = nullptr; //Dimensions on which this entity is located
 
-	matrix4 m_m4ToWorld = IDENTITY_M4; //Model matrix associated with this Entity
+	Model* m_pModel = nullptr; //Model associated with this MyEntity
+	MyRigidBody* m_pRigidBody = nullptr; //Rigid Body associated with this MyEntity
+
+	matrix4 m_m4ToWorld = IDENTITY_M4; //Model matrix associated with this MyEntity
 	MeshManager* m_pMeshMngr = nullptr; //For rendering shapes
 
 	static std::map<String, MyEntity*> m_IDMap; //a map of the unique ID's
@@ -32,7 +35,7 @@ class MyEntity
 
 public:
 	/*
-	Usage: Constructor that specifies the name attached to the Entity
+	Usage: Constructor that specifies the name attached to the MyEntity
 	Arguments:
 	-	String a_sFileName -> Name of the model to load
 	-	String a_sUniqueID -> Name wanted as identifier, if not available will generate one
@@ -88,7 +91,7 @@ public:
 	*/
 	MyRigidBody* GetRigidBody(void);
 	/*
-	USAGE: Will reply to the question, is the Entity Initialized?
+	USAGE: Will reply to the question, is the MyEntity Initialized?
 	ARGUMENTS: ---
 	OUTPUT: initialized?
 	*/
@@ -106,9 +109,9 @@ public:
 	*/
 	bool IsColliding(MyEntity* const other);
 	/*
-	USAGE: Gets the Entity specified by unique ID, nullptr if not exists
+	USAGE: Gets the MyEntity specified by unique ID, nullptr if not exists
 	ARGUMENTS: String a_sUniqueID -> unique ID if the queried entity
-	OUTPUT: Entity specified by unique ID, nullptr if not exists
+	OUTPUT: MyEntity specified by unique ID, nullptr if not exists
 	*/
 	static MyEntity* GetEntity(String a_sUniqueID);
 	/*
@@ -124,12 +127,58 @@ public:
 	*/
 	String GetUniqueID(void);
 	/*
-	USAGE: Sets the visibility of the axis of this Entity
+	USAGE: Sets the visibility of the axis of this MyEntity
 	ARGUMENTS: bool a_bSetAxis = true -> axis visible?
 	OUTPUT: ---
 	*/
 	void SetAxisVisible(bool a_bSetAxis = true);
+	/*
+	USAGE: Will set a dimension to the MyEntity
+	ARGUMENTS: uint a_uDimension -> dimension to set
+	OUTPUT: ---
+	*/
+	void AddDimension(uint a_uDimension);
+	/*
+	USAGE: Will remove the entity from the specified dimension
+	ARGUMENTS: uint a_uDimension -> dimension to remove
+	OUTPUT: ---
+	*/
+	void RemoveDimension(uint a_uDimension);
+	/*
+	USAGE: will remove all dimensions from entity
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void ClearDimensionSet(void);
+	/*
+	USAGE: Will ask if the MyEntity is located in a particular dimension
+	ARGUMENTS: uint a_uDimension -> dimension queried
+	OUTPUT: result
+	*/
+	bool IsInDimension(uint a_uDimension);
+	/*
+	USAGE: Asks if this entity shares a dimension with the incoming one
+	ARGUMENTS: MyEntity* const a_pOther -> queried entity
+	OUTPUT: shares at least one dimension?
+	*/
+	bool SharesDimension(MyEntity* const a_pOther);
 
+	/*
+	USAGE: Clears the collision list of this entity
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void ClearCollisionList(void);
+
+	/*
+	USAGE: Will sort the array of dimensions
+	ARGUMENTS: ---
+	OUTPUT: ---
+	*/
+	void SortDimensions(void);
+	/*
+	returns velocity of particle
+	*/
 	vector3 GetVelocity(void);
 
 private:
@@ -146,6 +195,9 @@ private:
 	*/
 	void Init(void);
 };//class
+
+  //EXPIMP_TEMPLATE template class SimplexDLL std::vector<MyEntity>;
+EXPIMP_TEMPLATE template class SimplexDLL std::vector<MyEntity*>;
 
 } //namespace Simplex
 

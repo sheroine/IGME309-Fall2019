@@ -1,5 +1,6 @@
 #include "AppClass.h"
 #include "MyOctant.h"
+
 using namespace Simplex;
 void Application::InitVariables(void)
 {
@@ -10,7 +11,7 @@ void Application::InitVariables(void)
 		AXIS_Y);					//Up
 
 	m_pLightMngr->SetPosition(vector3(0.0f, 3.0f, 13.0f), 1); //set the position of first light (0 is reserved for ambient light)
-	
+
 	//Entity Manager
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
@@ -26,7 +27,9 @@ void Application::InitVariables(void)
 		matrix4 m4Position = glm::translate(v3Position);
 		m_pEntityMngr->SetModelMatrix(m4Position);
 	}
-	
+
+	//m_uOctantLevels = 1;
+	//m_pRoot = new MyOctant(m_uOctantLevels, 5);
 }
 void Application::Update(void)
 {
@@ -38,7 +41,7 @@ void Application::Update(void)
 
 	//Is the first person camera active?
 	CameraRotation();
-	
+
 	//move the particles
 	for (uint i = 0; i < particleNum; i++)
 	{
@@ -47,10 +50,9 @@ void Application::Update(void)
 		m_pEntityMngr->SetModelMatrix(particleMatrix, i); //return it to its owner
 	}
 
-
 	//Update Entity Manager
 	m_pEntityMngr->Update();
-		
+
 	//Add objects to render list
 	m_pEntityMngr->AddEntityToRenderList(-1, true);
 }
@@ -58,7 +60,20 @@ void Application::Display(void)
 {
 	// Clear the screen
 	ClearScreen();
-	
+
+	//if (m_bOctVisRep)
+	//{
+	//	if (m_uOctantID == -1)
+	//	{
+	//		//display octree
+	//		m_pRoot->Display();
+	//	}
+	//	else
+	//	{
+	//		m_pRoot->Display(m_uOctantID);
+	//	}	
+	//}
+
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();
 	
@@ -68,7 +83,7 @@ void Application::Display(void)
 	//clear the render list
 	m_pMeshMngr->ClearRenderList();
 	
-	//draw gui
+	//draw gui,
 	DrawGUI();
 	
 	//end the current frame (internally swaps the front and back buffers)
@@ -81,4 +96,6 @@ void Application::Release(void)
 
 	//release GUI
 	ShutdownGUI();
+
+	SafeDelete(m_pRoot);
 }

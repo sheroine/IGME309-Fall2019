@@ -145,6 +145,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A05--Octree", "A05--Octree\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FinalPractical", "FinalPractical\FinalPractical.vcxproj", "{B2BC0913-9224-4097-9260-C459EA44024B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Practical", "Practical\Practical.vcxproj", "{0AD965C9-0C0B-405A-ADE6-038C794170C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -397,6 +399,10 @@ Global
 		{B2BC0913-9224-4097-9260-C459EA44024B}.Debug|x86.Build.0 = Debug|Win32
 		{B2BC0913-9224-4097-9260-C459EA44024B}.Release|x86.ActiveCfg = Release|Win32
 		{B2BC0913-9224-4097-9260-C459EA44024B}.Release|x86.Build.0 = Release|Win32
+		{0AD965C9-0C0B-405A-ADE6-038C794170C8}.Debug|x86.ActiveCfg = Debug|Win32
+		{0AD965C9-0C0B-405A-ADE6-038C794170C8}.Debug|x86.Build.0 = Debug|Win32
+		{0AD965C9-0C0B-405A-ADE6-038C794170C8}.Release|x86.ActiveCfg = Release|Win32
+		{0AD965C9-0C0B-405A-ADE6-038C794170C8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -463,6 +469,7 @@ Global
 		{3656F837-8796-45B4-B838-16D6D8265F41} = {F5C4E275-2B7C-4059-98A2-1A3CD34D6BC3}
 		{15B73904-3D23-4180-A9AE-B5F1C9F84A44} = {F5C4E275-2B7C-4059-98A2-1A3CD34D6BC3}
 		{B2BC0913-9224-4097-9260-C459EA44024B} = {F5C4E275-2B7C-4059-98A2-1A3CD34D6BC3}
+		{0AD965C9-0C0B-405A-ADE6-038C794170C8} = {F5C4E275-2B7C-4059-98A2-1A3CD34D6BC3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A36545A6-DAAA-4856-BDB7-57C29F88BC6B}

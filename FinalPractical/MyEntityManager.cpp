@@ -45,6 +45,7 @@ int Simplex::MyEntityManager::GetEntityIndex(String a_sUniqueID)
 	return -1;
 }
 //Accessors
+Simplex::uint Simplex::MyEntityManager::GetEntityCount(void) { return m_uEntityCount; }
 Model* Simplex::MyEntityManager::GetModel(uint a_uIndex)
 {
 	//if the list is empty return blank
@@ -68,7 +69,7 @@ Model* Simplex::MyEntityManager::GetModel(String a_sUniqueID)
 	}
 	return nullptr;
 }
-RigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
+MyRigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
 {
 	//if the list is empty return blank
 	if (m_entityList.size() == 0)
@@ -80,7 +81,7 @@ RigidBody* Simplex::MyEntityManager::GetRigidBody(uint a_uIndex)
 
 	return m_entityList[a_uIndex]->GetRigidBody();
 }
-RigidBody* Simplex::MyEntityManager::GetRigidBody(String a_sUniqueID)
+MyRigidBody* Simplex::MyEntityManager::GetRigidBody(String a_sUniqueID)
 {
 	//Get the entity
 	MyEntity* pTemp = MyEntity::GetEntity(a_sUniqueID);
@@ -261,4 +262,16 @@ void Simplex::MyEntityManager::AddEntityToRenderList(String a_sUniqueID, bool a_
 	{
 		pTemp->AddToRenderList(a_bRigidBody);
 	}
+}
+void Simplex::MyEntityManager::AddDimension(uint a_uIndex, uint a_uDimension)
+{
+	//if the list is empty return
+	if (m_uEntityCount == 0)
+		return;
+
+	//if the index is larger than the number of entries we are asking for the last one
+	if (a_uIndex >= m_uEntityCount)
+		a_uIndex = m_uEntityCount - 1;
+
+	return m_entityList[a_uIndex]->AddDimension(a_uDimension);
 }

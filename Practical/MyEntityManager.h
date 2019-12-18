@@ -13,9 +13,10 @@ namespace Simplex
 //System Class
 class MyEntityManager
 {
+	typedef MyEntity* PEntity; //MyEntity Pointer
 	uint m_uEntityCount = 0; //number of elements in the list
+	PEntity* m_mEntityArray = nullptr; //array of MyEntity pointers
 	static MyEntityManager* m_pInstance; // Singleton pointer
-	std::vector<MyEntity*> m_entityList; //entities list
 public:
 	/*
 	Usage: Gets the singleton pointer
@@ -44,13 +45,13 @@ public:
 	*/
 	void AddEntity(String a_sFileName, String a_sUniqueID = "NA");
 	/*
-	USAGE: Deletes the Entity Specified by unique ID and removes it from the list
+	USAGE: Deletes the MyEntity Specified by unique ID and removes it from the list
 	ARGUMENTS: uint a_uIndex -> index of the queried entry, if < 0 asks for the last one added
 	OUTPUT: ---
 	*/
 	void RemoveEntity(uint a_uIndex);
 	/*
-	USAGE: Deletes the Entity Specified by unique ID and removes it from the list
+	USAGE: Deletes the MyEntity Specified by unique ID and removes it from the list
 	ARGUMENTS: String a_sUniqueID -> Unique Identifier
 	OUTPUT: ---
 	*/
@@ -68,7 +69,7 @@ public:
 	*/
 	MyEntity* GetEntity(uint a_uIndex = -1);
 	/*
-	USAGE: Will update the Entity manager
+	USAGE: Will update the MyEntity manager
 	ARGUMENTS: ---
 	OUTPUT: ---
 	*/
@@ -257,13 +258,13 @@ private:
 	Arguments: class object to copy
 	Output: class object instance
 	*/
-	MyEntityManager(MyEntityManager const& other);
+	MyEntityManager(MyEntityManager const& a_pOther);
 	/*
 	Usage: copy assignment operator
 	Arguments: class object to copy
 	Output: ---
 	*/
-	MyEntityManager& operator=(MyEntityManager const& other);
+	MyEntityManager& operator=(MyEntityManager const& a_pOther);
 	/*
 	Usage: destructor
 	Arguments: ---

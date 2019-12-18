@@ -1,5 +1,4 @@
 #include "MyOctant.h"
-#include "MyRigidBody.h"
 using namespace Simplex;
 
 // Initializing static values

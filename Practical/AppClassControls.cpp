@@ -112,39 +112,63 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		m_pCameraMngr->SetFPS(bFPSControl);
 		break;
 	case sf::Keyboard::PageUp:
-		++m_uOctantID;
-		
-		if (m_uOctantID >= m_pRoot->GetOctantCount())
-			m_uOctantID = - 1;
+		//++m_uOctantID;
+		//
+		//if (m_uOctantID >= m_pRoot->GetOctantCount())
+		//	m_uOctantID = - 1;
+		if (particleNum < 500)
+		{
+			for (uint i = 0; i < 20; i++)
+			{
+				m_pEntityMngr->AddEntity("Planets\\09_Pluto.obj");
+				matrix4 m4Position = glm::translate(vector3(0));
+				m_pEntityMngr->SetModelMatrix(m4Position);
+			}
+
+			particleNum += 20;
+		}
 		
 		break;
 	case sf::Keyboard::PageDown:
-		--m_uOctantID;
-		
-		if (m_uOctantID >= m_pRoot->GetOctantCount())
-			m_uOctantID = - 1;
+		//--m_uOctantID;
+		//
+		//if (m_uOctantID >= m_pRoot->GetOctantCount())
+		//	m_uOctantID = - 1;
+		if (particleNum > 20)
+		{
+			for (uint i = 0; i < 20; i++)
+			{
+				m_pEntityMngr->RemoveEntity(m_pEntityMngr->GetEntityCount());
+			}
+
+			particleNum -= 20;
+		}
 		
 		break;
 	case sf::Keyboard::Add:
-		if (m_uOctantLevels < 4)
+		if (boxSize < 150.0f)
 		{
-			m_pEntityMngr->ClearDimensionSetAll();
-			++m_uOctantLevels;
-			
-			SafeDelete(m_pRoot);
-			m_pRoot = new MyOctant(m_uOctantLevels, 5);
-			m_uOctantID = -1;
+			//m_pEntityMngr->ClearDimensionSetAll();
+			//++m_uOctantLevels;
+			//
+			//SafeDelete(m_pRoot);
+			//m_pRoot = new MyOctant(m_uOctantLevels, 5);
+			//m_uOctantID = -1;
+
+			boxSize += 10.0f;
 		}
 		break;
 	case sf::Keyboard::Subtract:
-		if (m_uOctantLevels > 0)
+		if (boxSize > 20.0f)
 		{
-			m_pEntityMngr->ClearDimensionSetAll();
-			--m_uOctantLevels;
-			
-			SafeDelete(m_pRoot);
-			m_pRoot = new MyOctant(m_uOctantLevels, 5);
-			m_uOctantID = -1;
+			//m_pEntityMngr->ClearDimensionSetAll();
+			//--m_uOctantLevels;
+			//
+			//SafeDelete(m_pRoot);
+			//m_pRoot = new MyOctant(m_uOctantLevels, 5);
+			//m_uOctantID = -1;
+
+			boxSize -= 10.0f;
 		}
 		break;
 

@@ -37,7 +37,7 @@ void Simplex::MyEntity::Init(void)
 	m_nDimensionCount = 0;
 
 	//for being a particle
-	velocity = vector3((float)GenerateRandom(-2, 2), (float)GenerateRandom(-2, 2), (float)GenerateRandom(-2, 2));
+	velocity = vector3((float)GenerateRandom(-1, 1), (float)GenerateRandom(-1, 1), (float)GenerateRandom(-1, 1));
 }
 void Simplex::MyEntity::Swap(MyEntity& other)
 {

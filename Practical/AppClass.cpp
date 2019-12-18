@@ -19,7 +19,7 @@ void Application::InitVariables(void)
 	boxSize = 50.0f;
 
 	//add gas particles
-	particleNum = 50;
+	particleNum = 60;
 	for (int j = 0; j < particleNum; j++)
 	{
 		m_pEntityMngr->AddEntity("Planets\\09_Pluto.obj");

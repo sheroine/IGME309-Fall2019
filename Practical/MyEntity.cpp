@@ -35,6 +35,9 @@ void Simplex::MyEntity::Init(void)
 	m_m4ToWorld = IDENTITY_M4;
 	m_sUniqueID = "";
 	m_nDimensionCount = 0;
+
+	//for being a particle
+	velocity = vector3((float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5));
 }
 void Simplex::MyEntity::Swap(MyEntity& other)
 {

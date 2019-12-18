@@ -156,6 +156,9 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			//m_uOctantID = -1;
 
 			boxSize += 10.0f;
+
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5, boxSize);
 		}
 		break;
 	case sf::Keyboard::Subtract:
@@ -169,6 +172,9 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 			//m_uOctantID = -1;
 
 			boxSize -= 10.0f;
+
+			SafeDelete(m_pRoot);
+			m_pRoot = new MyOctant(m_uOctantLevels, 5, boxSize);
 		}
 		break;
 

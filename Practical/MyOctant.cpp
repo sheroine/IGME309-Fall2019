@@ -6,7 +6,7 @@ uint MyOctant::m_uOctantCount = 0;
 uint MyOctant::m_uMaxLevel = 1; //0
 uint MyOctant::m_uIdealEntityCount = 1; //0
 
-Simplex::MyOctant::MyOctant(uint a_nMaxLevel, uint a_nIdealEntityCount)
+Simplex::MyOctant::MyOctant(uint a_nMaxLevel, uint a_nIdealEntityCount, float boxsize)
 {
 	Init();
 
@@ -22,18 +22,21 @@ Simplex::MyOctant::MyOctant(uint a_nMaxLevel, uint a_nIdealEntityCount)
 
 	std::vector<vector3> lMinMax;
 
-	// get the number of entities in the scene, and loop through them
-	uint objects = m_pEntityMngr->GetEntityCount();
-	for (size_t i = 0; i < objects; i++)
-	{
-		// Retrieve rigid body of each entity
-		MyEntity* pEntity = m_pEntityMngr->GetEntity(i);
-		MyRigidBody* pRB = pEntity->GetRigidBody();
+	//// get the number of entities in the scene, and loop through them
+	//uint objects = m_pEntityMngr->GetEntityCount();
+	//for (size_t i = 0; i < objects; i++)
+	//{
+	//	// Retrieve rigid body of each entity
+	//	MyEntity* pEntity = m_pEntityMngr->GetEntity(i);
+	//	MyRigidBody* pRB = pEntity->GetRigidBody();
 
-		// Store the minimum and maximum in the list
-		lMinMax.push_back(pRB->GetMinGlobal());
-		lMinMax.push_back(pRB->GetMaxGlobal());
-	}
+	//	// Store the minimum and maximum in the list
+	//	lMinMax.push_back(pRB->GetMinGlobal());
+	//	lMinMax.push_back(pRB->GetMaxGlobal());
+	//}
+
+	lMinMax.push_back(vector3(boxsize / 2));
+	lMinMax.push_back(vector3(-boxsize / 2));
 
 	// Create a rigidBody pointer with the new set of vertices from the loop
 	MyRigidBody* pRigidBody = new MyRigidBody(lMinMax);

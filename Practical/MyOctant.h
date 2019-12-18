@@ -45,7 +45,7 @@ namespace Simplex
 		- uint nIdealEntityCount = 5 -> Sets the ideal level of objects per octant
 		OUTPUT: class object
 		*/
-		MyOctant(uint a_nMaxLevel = 2, uint a_nIdealEntityCount = 5);
+		MyOctant(uint a_nMaxLevel = 2, uint a_nIdealEntityCount = 5, float boxsize = 50.0f);
 		/*
 		USAGE: Constructor
 		ARGUMENTS:

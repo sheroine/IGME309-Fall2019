@@ -69,6 +69,9 @@ private:
 	//MyRigidBody* gasVolume = nullptr;
 	uint particleNum = 0;
 
+	//frame count for octree
+	uint octreeTimer = 0;
+
 public:
 #pragma region Constructor / Run / Destructor
 	/*

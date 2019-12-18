@@ -1,5 +1,6 @@
 #include "AppClass.h"
 #include "MyOctant.h"
+#include <time.h>
 
 using namespace Simplex;
 void Application::InitVariables(void)
@@ -29,8 +30,8 @@ void Application::InitVariables(void)
 		m_pEntityMngr->SetModelMatrix(m4Position);
 	}
 
-	//m_uOctantLevels = 1;
-	//m_pRoot = new MyOctant(m_uOctantLevels, 5);
+	m_uOctantLevels = 4;
+	m_pRoot = new MyOctant(m_uOctantLevels, 5, boxSize);
 }
 void Application::Update(void)
 {
@@ -55,6 +56,13 @@ void Application::Update(void)
 		m_pEntityMngr->SetModelMatrix(particleMatrix, i); //return it to its owner
 	}
 
+	octreeTimer += 1;
+	if (octreeTimer > 30)	//does this every 10 frames because I cannot find delta time for some reason
+	{
+		m_pRoot->ConstructTree(m_uOctantLevels);
+		octreeTimer = 0;
+	}	
+
 	//Update Entity Manager
 	m_pEntityMngr->Update();
 
@@ -66,21 +74,21 @@ void Application::Display(void)
 	// Clear the screen
 	ClearScreen();
 
-	//if (m_bOctVisRep)
-	//{
-	//	if (m_uOctantID == -1)
-	//	{
-	//		//display octree
-	//		m_pRoot->Display();
-	//	}
-	//	else
-	//	{
-	//		m_pRoot->Display(m_uOctantID);
-	//	}	
-	//}
+	if (m_bOctVisRep)
+	{
+		if (m_uOctantID == -1)
+		{
+			//display octree
+			m_pRoot->Display();
+		}
+		else
+		{
+			m_pRoot->Display(m_uOctantID);
+		}	
+	}
 
 	//draws the bounding box for the gas
-	m_pMeshMngr->AddWireCubeToRenderList(glm::translate(IDENTITY_M4, vector3(0, 0, 0)) * glm::scale(vector3(boxSize)), C_YELLOW, RENDER_WIRE);
+	m_pMeshMngr->AddWireCubeToRenderList(glm::translate(IDENTITY_M4, vector3(0, 0, 0)) * glm::scale(vector3(boxSize)), C_ORANGE, RENDER_WIRE);
 
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();

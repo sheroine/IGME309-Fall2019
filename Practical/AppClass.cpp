@@ -23,7 +23,7 @@ void Application::InitVariables(void)
 	for (int j = 0; j < particleNum; j++)
 	{
 		m_pEntityMngr->AddEntity("Planets\\09_Pluto.obj");
-		vector3 v3Position = vector3(glm::sphericalRand(boxSize));
+		vector3 v3Position = vector3(glm::sphericalRand(boxSize / 2));
 		matrix4 m4Position = glm::translate(v3Position);
 		m_pEntityMngr->SetModelMatrix(m4Position);
 	}
@@ -73,6 +73,9 @@ void Application::Display(void)
 	//		m_pRoot->Display(m_uOctantID);
 	//	}	
 	//}
+
+	//draws the bounding box for the gas
+	m_pMeshMngr->AddWireCubeToRenderList(glm::translate(IDENTITY_M4, vector3(0, 0, 0)) * glm::scale(vector3(boxSize)), C_YELLOW, RENDER_WIRE);
 
 	// draw a skybox
 	m_pMeshMngr->AddSkyboxToRenderList();

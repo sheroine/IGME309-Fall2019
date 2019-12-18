@@ -64,8 +64,9 @@ private:
 	sf::Sound m_sound; //sound effect
 	sf::Music m_soundBGM; //background music
 
-	//for tracking particle numbers
+	//for particle purposes
 	float boxSize = 0.0f;
+	//MyRigidBody* gasVolume = nullptr;
 	uint particleNum = 0;
 
 public:

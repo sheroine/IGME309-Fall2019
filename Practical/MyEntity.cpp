@@ -23,6 +23,10 @@ vector3 Simplex::MyEntity::GetVelocity(void)
 	return velocity;
 }
 
+void Simplex::MyEntity::CheckBounds(float bounds)
+{
+}
+
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {

@@ -180,6 +180,10 @@ public:
 	returns velocity of particle
 	*/
 	vector3 GetVelocity(void);
+	/*
+	checks if the partical has reached the bounds and rebound
+	*/
+	void CheckBounds(float bounds);
 
 private:
 	/*

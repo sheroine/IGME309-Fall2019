@@ -17,6 +17,12 @@ RigidBody* Simplex::MyEntity::GetRigidBody(void){	return m_pRigidBody; }
 bool Simplex::MyEntity::IsInitialized(void){ return m_bInMemory; }
 String Simplex::MyEntity::GetUniqueID(void) { return m_sUniqueID; }
 void Simplex::MyEntity::SetAxisVisible(bool a_bSetAxis) { m_bSetAxis = a_bSetAxis; }
+
+vector3 Simplex::MyEntity::GetVelocity(void)
+{
+	return velocity;
+}
+
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {
@@ -27,6 +33,9 @@ void Simplex::MyEntity::Init(void)
 	m_pRigidBody = nullptr;
 	m_m4ToWorld = IDENTITY_M4;
 	m_sUniqueID = "";
+
+	//for being a particle
+	velocity = vector3((float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5));
 }
 void Simplex::MyEntity::Swap(MyEntity& other)
 {

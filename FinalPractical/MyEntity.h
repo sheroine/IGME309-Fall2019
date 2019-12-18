@@ -25,6 +25,10 @@ class MyEntity
 
 	static std::map<String, MyEntity*> m_IDMap; //a map of the unique ID's
 
+	//for being a particle
+	vector3 velocity = vector3(0, 0, 0);
+	float mass = 1.0f;
+
 public:
 	/*
 	Usage: Constructor that specifies the name attached to the Entity
@@ -124,6 +128,8 @@ public:
 	OUTPUT: ---
 	*/
 	void SetAxisVisible(bool a_bSetAxis = true);
+
+	vector3 GetVelocity(void);
 
 private:
 	/*

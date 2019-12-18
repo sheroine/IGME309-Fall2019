@@ -58,6 +58,10 @@ private:
 	sf::Sound m_sound; //sound effect
 	sf::Music m_soundBGM; //background music
 
+	//for tracking particle numbers
+	float boxSize = 0.0f;
+	uint particleNum = 0;
+
 public:
 #pragma region Constructor / Run / Destructor
 	/*

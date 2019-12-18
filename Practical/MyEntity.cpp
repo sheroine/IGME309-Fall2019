@@ -23,10 +23,6 @@ vector3 Simplex::MyEntity::GetVelocity(void)
 	return velocity;
 }
 
-void Simplex::MyEntity::CheckBounds(float bounds)
-{
-}
-
 //  MyEntity
 void Simplex::MyEntity::Init(void)
 {
@@ -41,7 +37,7 @@ void Simplex::MyEntity::Init(void)
 	m_nDimensionCount = 0;
 
 	//for being a particle
-	velocity = vector3((float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5), (float)GenerateRandom(-5, 5));
+	velocity = vector3((float)GenerateRandom(-2, 2), (float)GenerateRandom(-2, 2), (float)GenerateRandom(-2, 2));
 }
 void Simplex::MyEntity::Swap(MyEntity& other)
 {
@@ -266,4 +262,39 @@ void Simplex::MyEntity::ClearCollisionList(void)
 void Simplex::MyEntity::SortDimensions(void)
 {
 	std::sort(m_DimensionArray, m_DimensionArray + m_nDimensionCount);
+}
+
+void Simplex::MyEntity::CheckBounds(float bounds)
+{
+	//calculate bounds
+	//check if pos is at any of the bounds
+	//if at bounds,
+	//move it back to bounds, then calculate new velocity
+	vector3 reflected = vector3(0.0f);
+	if (m_pRigidBody->GetCenterGlobal().x >= bounds / 2)	//x
+	{
+		reflected = 2 * vector3(-1.0f, 0.0f, 0.0f) * (vector3(-1.0f, 0.0f, 0.0f) * velocity);
+	}
+	else if (m_pRigidBody->GetCenterGlobal().x <= -bounds / 2)	//-x
+	{
+		reflected = 2 * vector3(1.0f, 0.0f, 0.0f) * (vector3(1.0f, 0.0f, 0.0f) * velocity);
+	}
+	else if (m_pRigidBody->GetCenterGlobal().y >= bounds / 2)	//y
+	{
+		reflected = 2 * vector3(0.0f, -1.0f, 0.0f) * (vector3(0.0f, -1.0f, 0.0f) * velocity);
+	}
+	else if (m_pRigidBody->GetCenterGlobal().y <= -bounds / 2) // -y
+	{
+		reflected = 2 * vector3(0.0f, 1.0f, 0.0f) * (vector3(0.0f, 1.0f, 0.0f) * velocity);
+	}
+	else if (m_pRigidBody->GetCenterGlobal().z >= bounds / 2)	//z
+	{
+		reflected = 2 * vector3(0.0f, 0.0f, -1.0f) * (vector3(0.0f, 0.0f, -1.0f) * velocity);
+	}
+	else if (m_pRigidBody->GetCenterGlobal().z <= -bounds / 2)	//-z
+	{
+		reflected = 2 * vector3(0.0f, 0.0f, 1.0f) * (vector3(0.0f, 0.0f, 1.0f) * velocity);
+	}
+
+	velocity -= reflected;
 }

@@ -16,15 +16,16 @@ void Application::InitVariables(void)
 	m_pEntityMngr = MyEntityManager::GetInstance();
 
 	//make bounding box for gas volume
-	boxSize = 25.0f;
+	boxSize = 50.0f;
 
 	//add gas particles
 	particleNum = 50;
 	for (int j = 0; j < particleNum; j++)
 	{
 		m_pEntityMngr->AddEntity("Planets\\09_Pluto.obj");
-		vector3 v3Position = vector3(glm::sphericalRand(boxSize / 2));
-		matrix4 m4Position = glm::translate(v3Position);
+		//vector3 v3Position = vector3(glm::sphericalRand(boxSize / 2));
+		//matrix4 m4Position = glm::translate(v3Position);
+		matrix4 m4Position = glm::translate(vector3(0));
 		m_pEntityMngr->SetModelMatrix(m4Position);
 	}
 
@@ -45,6 +46,10 @@ void Application::Update(void)
 	//move the particles
 	for (uint i = 0; i < particleNum; i++)
 	{
+		//have particles check bounds
+		m_pEntityMngr->GetEntity(i)->CheckBounds(boxSize);
+
+		//translate the particles
 		matrix4 particleMatrix = m_pEntityMngr->GetModelMatrix(i);// get the model matrix of the particle
 		particleMatrix *= glm::translate(IDENTITY_M4, m_pEntityMngr->GetEntity(i)->GetVelocity()); //translate it
 		m_pEntityMngr->SetModelMatrix(particleMatrix, i); //return it to its owner

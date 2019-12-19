@@ -27,6 +27,7 @@ void Application::InitVariables(void)
 		//vector3 v3Position = vector3(glm::sphericalRand(boxSize / 2));
 		//matrix4 m4Position = glm::translate(v3Position);
 		matrix4 m4Position = glm::translate(vector3(0));
+		m4Position *= glm::scale(vector3(m_pEntityMngr->GetEntity()->GetMass()));
 		m_pEntityMngr->SetModelMatrix(m4Position);
 	}
 
@@ -43,6 +44,8 @@ void Application::Update(void)
 
 	//Is the first person camera active?
 	CameraRotation();
+
+	approxDeltaTime = 1 / ImGui::GetIO().Framerate;
 
 	//move the particles
 	for (uint i = 0; i < particleNum; i++)

@@ -22,6 +22,10 @@ vector3 Simplex::MyEntity::GetVelocity(void)
 {
 	return velocity;
 }
+float Simplex::MyEntity::GetMass(void)
+{
+	return mass;
+}
 
 //  MyEntity
 void Simplex::MyEntity::Init(void)
@@ -37,6 +41,7 @@ void Simplex::MyEntity::Init(void)
 	m_nDimensionCount = 0;
 
 	//for being a particle
+	mass = (float)GenerateRandom(0.5, 2.0);
 	velocity = vector3((float)GenerateRandom(-1, 1), (float)GenerateRandom(-1, 1), (float)GenerateRandom(-1, 1));
 }
 void Simplex::MyEntity::Swap(MyEntity& other)
@@ -270,31 +275,19 @@ void Simplex::MyEntity::CheckBounds(float bounds)
 	//check if pos is at any of the bounds
 	//if at bounds,
 	//move it back to bounds, then calculate new velocity
-	vector3 reflected = vector3(0.0f);
-	if (m_pRigidBody->GetCenterGlobal().x >= bounds / 2)	//x
+	if ((m_pRigidBody->GetCenterGlobal().x > bounds / 2 && velocity.x > 0.0f) || 
+		(m_pRigidBody->GetCenterGlobal().x < -bounds / 2 && velocity.x < 0.0f))	//x
 	{
-		reflected = 2 * vector3(-1.0f, 0.0f, 0.0f) * (vector3(-1.0f, 0.0f, 0.0f) * velocity);
+		velocity.x *= -1;
 	}
-	else if (m_pRigidBody->GetCenterGlobal().x <= -bounds / 2)	//-x
+	else if ((m_pRigidBody->GetCenterGlobal().y > bounds / 2 && velocity.y > 0.0f) ||
+		(m_pRigidBody->GetCenterGlobal().y < -bounds / 2 && velocity.y < 0.0f))	//y
 	{
-		reflected = 2 * vector3(1.0f, 0.0f, 0.0f) * (vector3(1.0f, 0.0f, 0.0f) * velocity);
+		velocity.y *= -1;
 	}
-	else if (m_pRigidBody->GetCenterGlobal().y >= bounds / 2)	//y
+	else if ((m_pRigidBody->GetCenterGlobal().z > bounds / 2 && velocity.z > 0.0f) ||
+		(m_pRigidBody->GetCenterGlobal().z < -bounds / 2 && velocity.z < 0.0f))	//z
 	{
-		reflected = 2 * vector3(0.0f, -1.0f, 0.0f) * (vector3(0.0f, -1.0f, 0.0f) * velocity);
+		velocity.z *= -1;
 	}
-	else if (m_pRigidBody->GetCenterGlobal().y <= -bounds / 2) // -y
-	{
-		reflected = 2 * vector3(0.0f, 1.0f, 0.0f) * (vector3(0.0f, 1.0f, 0.0f) * velocity);
-	}
-	else if (m_pRigidBody->GetCenterGlobal().z >= bounds / 2)	//z
-	{
-		reflected = 2 * vector3(0.0f, 0.0f, -1.0f) * (vector3(0.0f, 0.0f, -1.0f) * velocity);
-	}
-	else if (m_pRigidBody->GetCenterGlobal().z <= -bounds / 2)	//-z
-	{
-		reflected = 2 * vector3(0.0f, 0.0f, 1.0f) * (vector3(0.0f, 0.0f, 1.0f) * velocity);
-	}
-
-	velocity -= reflected;
 }

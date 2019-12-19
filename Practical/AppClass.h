@@ -72,6 +72,9 @@ private:
 	//frame count for octree
 	uint octreeTimer = 0;
 
+	//approx delta time
+	float approxDeltaTime = 0.0f;
+
 public:
 #pragma region Constructor / Run / Destructor
 	/*

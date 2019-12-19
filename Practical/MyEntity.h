@@ -31,7 +31,7 @@ class MyEntity
 
 	//for being a particle
 	vector3 velocity = vector3(0, 0, 0);
-	float mass = 1.0f;
+	float mass = 0.0f;
 
 public:
 	/*
@@ -180,6 +180,10 @@ public:
 	returns velocity of particle
 	*/
 	vector3 GetVelocity(void);
+	/*
+	returns mass
+	*/
+	float GetMass(void);
 	/*
 	checks if the partical has reached the bounds and rebound
 	*/

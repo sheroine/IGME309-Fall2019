@@ -116,7 +116,7 @@ void Application::ProcessKeyReleased(sf::Event a_event)
 		//
 		//if (m_uOctantID >= m_pRoot->GetOctantCount())
 		//	m_uOctantID = - 1;
-		if (particleNum < 500)
+		if (particleNum < 300)
 		{
 			for (uint i = 0; i < 20; i++)
 			{

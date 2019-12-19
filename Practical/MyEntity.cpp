@@ -26,6 +26,10 @@ float Simplex::MyEntity::GetMass(void)
 {
 	return mass;
 }
+void Simplex::MyEntity::SetVelocity(vector3 newVelocity)
+{
+	velocity = newVelocity;
+}
 
 //  MyEntity
 void Simplex::MyEntity::Init(void)

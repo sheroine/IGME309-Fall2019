@@ -176,14 +176,22 @@ public:
 	OUTPUT: ---
 	*/
 	void SortDimensions(void);
+
 	/*
 	returns velocity of particle
 	*/
 	vector3 GetVelocity(void);
+
 	/*
 	returns mass
 	*/
 	float GetMass(void);
+
+	/*
+	sets new velocity
+	*/
+	void SetVelocity(vector3 newVelocity);
+
 	/*
 	checks if the partical has reached the bounds and rebound
 	*/
